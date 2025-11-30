@@ -138,28 +138,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       logs: ['Processing authentication request', 'Token generated successfully'],
       level: 'info',
     },
-    {
-      id: 'log-2',
-      functionId: 'fn-1',
-      timestamp: new Date(Date.now() - 15 * 60 * 1000),
-      status: 'error',
-      duration: 89,
-      statusCode: 401,
-      requestBody: { username: 'invalid@example.com' },
-      responseBody: { error: 'Invalid credentials' },
-      logs: ['Authentication failed', 'User not found'],
-      level: 'error',
-    },
-    {
-      id: 'log-3',
-      functionId: 'fn-2',
-      timestamp: new Date(Date.now() - 25 * 60 * 1000),
-      status: 'success',
-      duration: 315,
-      statusCode: 200,
-      logs: ['Processing batch of 95 items', 'Batch processed successfully'],
-      level: 'info',
-    },
   ]);
 
   const [currentWorkspaceId, setCurrentWorkspaceId] = useState<string | null>('ws-1');
