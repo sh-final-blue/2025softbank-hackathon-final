@@ -102,15 +102,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       invocations24h: 15420,
       errorRate: 0.2,
     },
-    {
-      id: 'ws-2',
-      name: 'Development',
-      description: 'Development and testing workspace',
-      createdAt: new Date('2025-12-01'),
-      functionCount: 4,
-      invocations24h: 892,
-      errorRate: 1.5,
-    },
   ]);
 
   const [functions, setFunctions] = useState<FunctionConfig[]>([
@@ -166,24 +157,6 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       invocations24h: 1800,
       errors24h: 3,
       avgDuration: 89,
-    },
-    {
-      id: 'fn-4',
-      workspaceId: 'ws-2',
-      name: 'test-function',
-      description: 'Testing new features',
-      runtime: 'Python 3.12',
-      memory: 256,
-      timeout: 30,
-      httpMethods: ['GET', 'POST'],
-      environmentVariables: { DEBUG: 'true' },
-      code: DEFAULT_PYTHON_CODE,
-      status: 'active',
-      lastModified: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-      lastDeployed: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-      invocations24h: 650,
-      errors24h: 12,
-      avgDuration: 210,
     },
   ]);
 
