@@ -20,7 +20,8 @@ export interface FunctionConfig {
   timeout: number;
   httpMethods: string[];
   environmentVariables: Record<string, string>;
-  code: string;
+  code: string; // Base64 encoded in production, plain text in MVP mock
+  invocationUrl: string | null; // Function invocation URL (null until deployed)
   status: 'active' | 'disabled';
   lastModified: Date;
   lastDeployed?: Date;
@@ -116,6 +117,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       httpMethods: ['POST'],
       environmentVariables: { JWT_SECRET: 'secret-key', TOKEN_EXPIRY: '3600' },
       code: DEFAULT_PYTHON_CODE,
+      invocationUrl: 'https://api.example.com/invoke/fn-1',
       status: 'active',
       lastModified: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
       lastDeployed: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
