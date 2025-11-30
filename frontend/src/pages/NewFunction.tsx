@@ -104,7 +104,7 @@ export default function NewFunction() {
       workspaceId: workspaceId!,
       name,
       description,
-      runtime: 'Python 3.11',
+      runtime: 'Python 3.12',
       memory: parseInt(memory),
       timeout: parseInt(timeout),
       httpMethods,
@@ -159,7 +159,7 @@ export default function NewFunction() {
                 <div className="space-y-2">
                   <Label>{t('newFunction.basicInfo.runtime')}</Label>
                   <div className="flex items-center justify-between p-3 border rounded-md bg-muted">
-                    <span>Python 3.11</span>
+                    <span>Python 3.12</span>
                     <span className="text-xs text-muted-foreground">{t('newFunction.basicInfo.otherLanguages')}</span>
                   </div>
                 </div>
