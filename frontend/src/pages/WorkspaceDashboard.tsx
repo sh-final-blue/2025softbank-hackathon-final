@@ -64,25 +64,25 @@ export default function WorkspaceDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <MetricsCard
             title={t('workspace.metrics.totalFunctions')}
-            value={workspace.functionCount}
+            value="n"
             icon={Code2}
             description={t('workspace.metrics.activeAndDisabled')}
           />
           <MetricsCard
             title={t('workspace.metrics.invocations')}
-            value={totalInvocations.toLocaleString()}
+            value="n"
             icon={Activity}
             description={t('workspace.metrics.last24h')}
           />
           <MetricsCard
             title={t('workspace.metrics.errorRate')}
-            value={`${errorRate}%`}
+            value="n%"
             icon={AlertCircle}
             description={t('workspace.metrics.last24h')}
           />
           <MetricsCard
             title={t('workspace.metrics.avgDuration')}
-            value={`${avgDuration}ms`}
+            value="nms"
             icon={Clock}
             description={t('workspace.metrics.acrossAll')}
           />
@@ -119,7 +119,7 @@ export default function WorkspaceDashboard() {
                         onClick={() => navigate(`/workspaces/${workspaceId}/functions/${log.functionId}`)}
                       >
                         <TableCell className="text-muted-foreground">
-                          {formatDistanceToNow(log.timestamp, { addSuffix: true })}
+                          n
                         </TableCell>
                         <TableCell className="font-medium">{fn?.name || t('common.unknown')}</TableCell>
                         <TableCell>
@@ -127,7 +127,7 @@ export default function WorkspaceDashboard() {
                             {log.status}
                           </Badge>
                         </TableCell>
-                        <TableCell className="text-muted-foreground">{log.duration}ms</TableCell>
+                        <TableCell className="text-muted-foreground">nms</TableCell>
                       </TableRow>
                     );
                   })}
