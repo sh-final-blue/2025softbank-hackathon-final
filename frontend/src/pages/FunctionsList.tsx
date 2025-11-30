@@ -122,10 +122,10 @@ export default function FunctionsList() {
                       </Badge>
                     </TableCell>
                     <TableCell className="text-muted-foreground">
-                      {fn.invocations24h.toLocaleString()}
+                      n
                     </TableCell>
                     <TableCell className="text-muted-foreground">
-                      {formatDistanceToNow(fn.lastModified, { addSuffix: true })}
+                      n
                     </TableCell>
                     <TableCell onClick={(e) => e.stopPropagation()}>
                       <DropdownMenu>
