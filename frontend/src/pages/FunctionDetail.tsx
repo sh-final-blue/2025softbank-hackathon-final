@@ -143,7 +143,7 @@ export default function FunctionDetail() {
                 <div>
                   <div className="text-muted-foreground">{t('functionDetail.configuration.lastDeployed')}</div>
                   <div className="font-medium">
-                    {fn.lastDeployed ? formatDistanceToNow(fn.lastDeployed, { addSuffix: true }) : t('functionDetail.configuration.never')}
+                    n
                   </div>
                 </div>
               </CardContent>
@@ -152,19 +152,19 @@ export default function FunctionDetail() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <MetricsCard
                 title={t('workspace.metrics.invocations')}
-                value={fn.invocations24h.toLocaleString()}
+                value="n"
                 icon={Activity}
                 description={t('workspace.metrics.last24h')}
               />
               <MetricsCard
                 title={t('common.error')}
-                value={fn.errors24h}
+                value="n"
                 icon={AlertCircle}
                 description={t('workspace.metrics.last24h')}
               />
               <MetricsCard
                 title={t('workspace.metrics.avgDuration')}
-                value={`${fn.avgDuration}ms`}
+                value="nms"
                 icon={Clock}
                 description={t('workspace.metrics.acrossAll')}
               />
