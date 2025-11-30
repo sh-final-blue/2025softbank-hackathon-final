@@ -51,8 +51,27 @@
 - [ ] spin-operator 설치
 
 ## 7. Application & CI/CD
-Application Design:
-- [ ] Application 설계 (DB 포함)
+
+Application Design [DB 포함]:
+참고: frontend/API_Document.md
+
+### Frontend
+- [ ] Frontend MVP Mock-up 인수인계 및 코드 리뷰
+
+### Backend
+1. FastAPI Server 개발 및 환경 구성
+- [ ] FastAPI 초기 세팅: 프로젝트 생성 및 Uvicorn 실행 환경 구성
+- [ ] API 문서화: Swagger UI 설정 및 공유
+- [ ] AWS 연결 구현: boto3 라이브러리 설치 및 DynamoDB/S3 Client 연결 코드 작성
+- [ ] 핵심 로직 구현: Workspace/Function CRUD 및 Base64 코드 처리 로직 개발 (참고: frontend/API_Document.md)
+- [ ] Dockerfile 및 K3s 배포 스펙(Port, Env) 협의
+
+2. AWS 리소스 연동 준비
+- [ ] DynamoDB: 단일 테이블(Single Table) 생성 (PK/SK 구조)
+- [ ] S3: 함수 코드 저장용 버킷 생성 (경로: s3://bucket/{ws_id}/{fn_id}.py)
+- [ ] 권한(Credential) 처리:
+    - 개발용: EC2 내부 .env 파일에 AWS 키 설정
+    - 배포용: K8s 파드(Pod)에 적용될 IAM Role 권한 확인
 
 CI/CD Pipeline: 코드 -> Dockerfile 빌드 -> ECR 배포 -> GitHub Actions -> 배포
 
