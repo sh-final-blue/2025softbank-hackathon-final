@@ -3,7 +3,6 @@
 본 문서는 프론트엔드에서 백엔드 API 연동이 필요한 지점을 정리한 문서입니다.
 **"테스트 & 실행" 기능은 프론트엔드 시뮬레이션이므로 제외**되었습니다.
 
-> **해커톤 MVP 특성**: Hello World 수준 시연을 위한 간단한 구현 우선
 
 ---
 
@@ -232,7 +231,6 @@ Content-Type: application/json
 ```
 
 **주의**:
-- `environmentVariables` 조회 시 민감 정보 마스킹 (`***`)
 - `invocationUrl`은 배포 완료 전까지 `null`
 - `code`는 S3에 저장, 응답에는 Base64 문자열 포함
 
@@ -270,7 +268,8 @@ GET /api/workspaces/{workspaceId}/functions
     "timeout": 30,
     "httpMethods": ["POST"],
     "environmentVariables": {
-      "JWT_SECRET": "***"
+      "JWT_SECRET": "secret-key",
+      "TOKEN_EXPIRY": "3600"
     },
     "code": "ZGVmIGhhbmRsZXIoZXZlbnQsIGNvbnRleHQpOgogICAgcmV0dXJuIHsnc3RhdHVzQ29kZSc6IDIwMCwgJ2JvZHknOiAnSGVsbG8nfQ==",
     "invocationUrl": "https://api.example.com/invoke/fn-1",
@@ -311,7 +310,8 @@ GET /api/workspaces/{workspaceId}/functions/{functionId}
   "timeout": 30,
   "httpMethods": ["POST"],
   "environmentVariables": {
-    "JWT_SECRET": "***"
+    "JWT_SECRET": "secret-key",
+    "TOKEN_EXPIRY": "3600"
   },
   "code": "ZGVmIGhhbmRsZXIoZXZlbnQsIGNvbnRleHQpOgogICAgcmV0dXJuIHsnc3RhdHVzQ29kZSc6IDIwMCwgJ2JvZHknOiAnSGVsbG8nfQ==",
   "invocationUrl": "https://api.example.com/invoke/fn-1",
@@ -532,11 +532,9 @@ encoded_code = base64.b64encode(python_code.encode('utf-8')).decode('utf-8')
 }
 ```
 
-### 5. 환경 변수 보안
+### 5. 환경 변수 처리
 - `environmentVariables`는 민감 정보 포함 가능
-- 조회 시 마스킹 (`JWT_SECRET: "***"`)
-- 생성/수정 시에만 평문 전송
-- DynamoDB에는 암호화 저장 권장
+- MVP에서는 평문 저장/조회 (추후 암호화 및 마스킹 고도화 필요)
 
 ---
 
@@ -560,14 +558,14 @@ encoded_code = base64.b64encode(python_code.encode('utf-8')).decode('utf-8')
 ## MVP 구현 체크리스트
 
 ### 필수 구현
-- [x] Base64 인코딩/디코딩 (code 필드)
-- [x] invocationUrl 필드 추가
-- [x] 단일 DynamoDB 테이블 설계
-- [x] S3 코드 저장 경로 설계
-- [x] 간단한 로그 조회 (limit만)
+- [ ] Base64 인코딩/디코딩 (code 필드)
+- [ ] invocationUrl 필드 추가
+- [ ] 단일 DynamoDB 테이블 설계
+- [ ] S3 코드 저장 경로 설계
+- [ ] 간단한 로그 조회 (limit만)
 
 ### 추후 확장
 - [ ] nextToken 기반 페이지네이션
-- [ ] 환경 변수 암호화
+- [ ] 환경 변수 암호화 및 마스킹
 - [ ] 메트릭 실시간 집계 (CloudWatch)
 - [ ] 함수 배포 자동화 (invocationUrl 생성)
