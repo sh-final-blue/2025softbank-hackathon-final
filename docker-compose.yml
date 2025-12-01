@@ -9,8 +9,11 @@ services:
     volumes:
       # 백엔드 코드 (hot-reload)
       - ./backend:/app
+      # 참고용 폴더 (읽기/쓰기 가능)
+      - ./frontend:/reference/frontend
+      - ./apiSpec:/reference/apiSpec
+      - ./swagger-viewer.html:/reference/swagger-viewer.html
       # 참고용 폴더 (읽기 전용)
-      - ./frontend:/reference/frontend:ro
       - ./terraform:/reference/terraform:ro
       - ./reference:/reference/docs:ro
     env_file:
