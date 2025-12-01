@@ -52,38 +52,10 @@ SK (문자열/String)
 
 ---
 
-## 🖥️ AWS CLI로 생성하기 (선택)
 
-### 온디맨드 모드:
-
-```bash
-aws dynamodb create-table \
-  --table-name sfbank-blue-FaaSData \
-  --attribute-definitions \
-    AttributeName=PK,AttributeType=S \
-    AttributeName=SK,AttributeType=S \
-  --key-schema \
-    AttributeName=PK,KeyType=HASH \
-    AttributeName=SK,KeyType=RANGE \
-  --billing-mode PAY_PER_REQUEST \
-  --region ap-northeast-2
 ```
 
-### 프로비저닝 모드:
 
-```bash
-aws dynamodb create-table \
-  --table-name sfbank-blue-FaaSData \
-  --attribute-definitions \
-    AttributeName=PK,AttributeType=S \
-    AttributeName=SK,AttributeType=S \
-  --key-schema \
-    AttributeName=PK,KeyType=HASH \
-    AttributeName=SK,KeyType=RANGE \
-  --billing-mode PROVISIONED \
-  --provisioned-throughput \
-    ReadCapacityUnits=5,WriteCapacityUnits=5 \
-  --region ap-northeast-2
 ```
 
 ---
@@ -188,17 +160,6 @@ aws dynamodb describe-table \
 
 ---
 
-## 💰 비용 예상
-
-### 온디맨드 모드 (개발/테스트 추천):
-- **읽기**: $0.25 per million read request units
-- **쓰기**: $1.25 per million write request units
-- **저장**: $0.25 per GB-month
-- **예상**: 개발 단계에서 월 $1 미만
-
-### 프로비저닝 모드:
-- **5 RCU + 5 WCU**: 월 약 $2.50
-- 트래픽이 예측 가능한 프로덕션에 적합
 
 ---
 
@@ -228,36 +189,6 @@ aws dynamodb describe-table \
 
 ---
 
-## 🧪 테스트 데이터 삽입
-
-### AWS CLI로 테스트:
-
-```bash
-# Workspace 생성 테스트
-aws dynamodb put-item \
-  --table-name sfbank-blue-FaaSData \
-  --item '{
-    "PK": {"S": "WS#test-001"},
-    "SK": {"S": "METADATA"},
-    "id": {"S": "test-001"},
-    "name": {"S": "Test Workspace"},
-    "createdAt": {"S": "2025-12-01T00:00:00Z"},
-    "functionCount": {"N": "0"}
-  }' \
-  --region ap-northeast-2
-
-# 조회 확인
-aws dynamodb get-item \
-  --table-name sfbank-blue-FaaSData \
-  --key '{
-    "PK": {"S": "WS#test-001"},
-    "SK": {"S": "METADATA"}
-  }' \
-  --region ap-northeast-2
-```
-
----
-
 ## ⚠️ 주의사항
 
 1. **테이블 이름**: 반드시 `sfbank-blue-FaaSData` 사용
@@ -267,19 +198,6 @@ aws dynamodb get-item \
 5. **백업**: 프로덕션 환경에서는 PITR(Point-in-Time Recovery) 활성화 권장
 
 ---
-
-## 🔄 기존 데이터 마이그레이션
-
-만약 이전에 `FaaSData` 테이블을 사용했다면:
-
-```bash
-# 1. 기존 데이터 백업
-aws dynamodb scan --table-name FaaSData > backup.json
-
-# 2. 새 테이블 생성 (위 가이드 참조)
-
-# 3. 데이터 마이그레이션 (필요 시)
-```
 
 ---
 

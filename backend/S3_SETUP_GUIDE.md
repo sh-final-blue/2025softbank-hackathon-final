@@ -61,33 +61,7 @@ sfbank-blue-functions-code-bucket
 
 ---
 
-## 🖥️ AWS CLI로 생성하기 (선택)
 
-```bash
-# 1. 버킷 생성
-aws s3 mb s3://sfbank-blue-functions-code-bucket \
-  --region ap-northeast-2
-
-# 2. 퍼블릭 액세스 차단 설정
-aws s3api put-public-access-block \
-  --bucket sfbank-blue-functions-code-bucket \
-  --public-access-block-configuration \
-    "BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true" \
-  --region ap-northeast-2
-
-# 3. 암호화 설정
-aws s3api put-bucket-encryption \
-  --bucket sfbank-blue-functions-code-bucket \
-  --server-side-encryption-configuration '{
-    "Rules": [{
-      "ApplyServerSideEncryptionByDefault": {
-        "SSEAlgorithm": "AES256"
-      },
-      "BucketKeyEnabled": true
-    }]
-  }' \
-  --region ap-northeast-2
-```
 
 ---
 
@@ -207,22 +181,25 @@ aws s3api get-bucket-location \
 
 ```json
 {
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Action": [
-        "s3:GetObject",
-        "s3:PutObject",
-        "s3:DeleteObject",
-        "s3:ListBucket"
-      ],
-      "Resource": [
-        "arn:aws:s3:::sfbank-blue-functions-code-bucket",
-        "arn:aws:s3:::sfbank-blue-functions-code-bucket/*"
-      ]
-    }
-  ]
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::217350599014:role/blue-final-k3s-worker"
+            },
+            "Action": [
+                "s3:GetObject",
+                "s3:PutObject",
+                "s3:DeleteObject",
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::sfbank-blue-functions-code-bucket",
+                "arn:aws:s3:::sfbank-blue-functions-code-bucket/*"
+            ]
+        }
+    ]
 }
 ```
 
@@ -236,73 +213,12 @@ aws s3api get-bucket-location \
 2. "업로드" 버튼 클릭
 3. 테스트 파일 선택 후 업로드
 
-### AWS CLI로:
 
-```bash
-# 테스트 파일 생성
-echo 'def handler(event, context):
-    return {"statusCode": 200, "body": "Hello from S3"}' > test-function.py
-
-# 업로드
-aws s3 cp test-function.py \
-  s3://sfbank-blue-functions-code-bucket/test-ws/test-fn.py \
-  --region ap-northeast-2
-
-# 다운로드 테스트
-aws s3 cp \
-  s3://sfbank-blue-functions-code-bucket/test-ws/test-fn.py \
-  downloaded.py \
-  --region ap-northeast-2
-
-# 내용 확인
-cat downloaded.py
-
-# 삭제
-aws s3 rm \
-  s3://sfbank-blue-functions-code-bucket/test-ws/test-fn.py
-```
 
 ---
 
-## 💰 비용 예상
 
-### S3 Standard 스토리지:
-- **저장**: $0.025 per GB/월
-- **PUT 요청**: $0.005 per 1,000 requests
-- **GET 요청**: $0.0004 per 1,000 requests
-- **예상**: 함수 100개 (각 10KB) → 월 $0.01 미만
 
-### 프리 티어 (12개월):
-- 5 GB 스토리지
-- 20,000 GET 요청
-- 2,000 PUT 요청
-
----
-
-## 🔄 수명 주기 정책 (선택)
-
-오래된 함수 코드를 자동 삭제하려면:
-
-### AWS Console:
-1. 버킷 → "관리" 탭 → "수명 주기 규칙 만들기"
-2. 규칙 이름: `delete-old-versions`
-3. 필터: 모든 객체
-4. 작업: "현재 버전 만료" → 90일 후
-
-### AWS CLI:
-```bash
-aws s3api put-bucket-lifecycle-configuration \
-  --bucket sfbank-blue-functions-code-bucket \
-  --lifecycle-configuration '{
-    "Rules": [{
-      "Id": "delete-old-versions",
-      "Status": "Enabled",
-      "Expiration": {
-        "Days": 90
-      }
-    }]
-  }'
-```
 
 ---
 
