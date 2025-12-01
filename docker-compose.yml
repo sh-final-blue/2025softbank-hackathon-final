@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: faas-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      # 백엔드 코드 (hot-reload)
+      - ./backend:/app
+      # 참고용 폴더 (읽기 전용)
+      - ./frontend:/reference/frontend:ro
+      - ./terraform:/reference/terraform:ro
+      - ./reference:/reference/docs:ro
+    environment:
+      - AWS_REGION=${AWS_REGION:-ap-northeast-2}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-dummy}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-dummy}
+      - DYNAMODB_TABLE_NAME=${DYNAMODB_TABLE_NAME:-FaaSData}
+      - S3_BUCKET_NAME=${S3_BUCKET_NAME:-functions-code-bucket}
+      - ENVIRONMENT=development
+      - LOG_LEVEL=INFO
+    networks:
+      - faas-network
+    restart: unless-stopped
+
+networks:
+  faas-network:
+    driver: bridge
