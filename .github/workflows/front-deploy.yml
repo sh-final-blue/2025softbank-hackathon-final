@@ -1,3 +1,5 @@
+name: Deploy Frontend to S3
+
 on:
   push:
     # branches:
