@@ -7,7 +7,13 @@ WORKDIR /app
 # 시스템 패키지 업데이트 및 필수 패키지 설치
 RUN apt-get update && apt-get install -y \
     gcc \
+    curl \
+    git \
+    vim \
     && rm -rf /var/lib/apt/lists/*
+
+# Gemini CLI 설치 (공식 설치 스크립트 사용)
+RUN curl -fsSL https://raw.githubusercontent.com/google-gemini/gemini-cli/main/scripts/install.sh | bash
 
 # Python 의존성 복사 및 설치
 COPY requirements.txt .
