@@ -109,7 +109,7 @@ variable "waf_enable_sampled_requests" {
 variable "create_bastion" {
   description = "Whether to create Bastion Host"
   type        = bool
-  default     = true
+  default     = false  # 비활성화됨 - K3s 노드로 SSH 접속 가능
 }
 
 variable "bastion_instance_type" {
