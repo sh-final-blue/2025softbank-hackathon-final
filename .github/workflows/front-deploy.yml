@@ -6,6 +6,7 @@ on:
     #   - production
     paths:
       - "frontend/**"
+      - ".github/workflows/front-deploy.yml"
 
 jobs:
   build:
