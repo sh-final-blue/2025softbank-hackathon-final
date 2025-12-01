@@ -3,6 +3,7 @@ import boto3
 from boto3.dynamodb.conditions import Key
 from app.config import settings
 from typing import Optional, Dict, Any, List
+from decimal import Decimal
 import base64
 import shortuuid
 from datetime import datetime
@@ -33,7 +34,7 @@ class DynamoDBClient:
             "createdAt": now,
             "functionCount": 0,
             "invocations24h": 0,
-            "errorRate": 0.0,
+            "errorRate": Decimal("0"),
         }
 
         self.table.put_item(Item=item)
@@ -120,7 +121,7 @@ class DynamoDBClient:
             "lastDeployed": None,
             "invocations24h": 0,
             "errors24h": 0,
-            "avgDuration": 0.0,
+            "avgDuration": Decimal("0"),
         }
 
         self.table.put_item(Item=item)
