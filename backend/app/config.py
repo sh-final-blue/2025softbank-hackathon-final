@@ -12,10 +12,10 @@ class Settings(BaseSettings):
     aws_secret_access_key: str = ""
 
     # DynamoDB
-    dynamodb_table_name: str = "FaaSData"
+    dynamodb_table_name: str = "sfbank-blue-FaaSData"
 
     # S3
-    s3_bucket_name: str = "functions-code-bucket"
+    s3_bucket_name: str = "sfbank-blue-functions-code-bucket"
 
     # FastAPI
     environment: str = "development"
