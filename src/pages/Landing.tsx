@@ -161,6 +161,18 @@ export default function Landing() {
           </DialogContent>
         </Dialog>
       </div>
+      {/* Footer Section */}
+      <footer className="w-full bg-muted-foreground/10 py-8 mt-16 border-t">
+        <div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+          <div className="text-center md:text-left">
+            <span className="font-bold text-lg">{t('app.title')}</span>
+            <span className="block text-muted-foreground mt-2">빠르고 쉬운 서버리스 함수 플랫폼</span>
+          </div>
+          <div className="text-muted-foreground text-sm text-center md:text-right">
+            &copy; {new Date().getFullYear()} Yoitang. All rights reserved.
+          </div>
+        </div>
+      </footer>
     </AppLayout>
   );
 }
